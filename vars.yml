@@ -1,0 +1,6 @@
+# this book has default vars for all other books
+
+# override syntax:
+
+url_conf: "{{ url_conf | default('https://raw.githubusercontent.com/trueos/trueos-core/master/build-files/conf/desktop/port-make.conf') }}"
+url_dist: "{{ url_dist | default('http://download.trueos.org/unstable/amd64/dist/') }}"

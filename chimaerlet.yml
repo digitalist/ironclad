@@ -1,7 +1,8 @@
 - name: Poudriere setup
-  hosts: ironclad
+  hosts: "{{ phosts | default('ironclad') }}"
   become: true
   tasks:
+#  - include_vars: "vars.yml"
   - name: dbg
     debug:
       msg: "{{ ansible_os_family  }} {{ ansible_distribution }} [should be trueos]"
@@ -19,7 +20,7 @@
         ZROOTFS=/poudriere
   - name: get port-make.conf
     get_url:
-      url: https://raw.githubusercontent.com/trueos/trueos-core/master/build-files/conf/desktop/port-make.conf
+      url: "{{ url_conf | default('https://raw.githubusercontent.com/trueos/trueos-core/master/build-files/conf/desktop/port-make.conf') }}"
       dest: /usr/local/etc/poudriere.d/trueos-make.conf
   - name: "Poudriere config git"
     lineinfile:
@@ -36,7 +37,7 @@
     register: have_jail
   - name: "Create poudriere jail"
     when: have_jail.stdout == ""
-    command: "poudriere jail -c -j trueos -v 12-CURRENT -m url=http://download.trueos.org/unstable/amd64/dist/"
+    command: "poudriere jail -c -j trueos -v 12-CURRENT -m url={{ url_dist | default('http://download.trueos.org/unstable/amd64/dist/') }}"
 
 
 #
