@@ -1,0 +1,42 @@
+- name: Poudriere setup
+  hosts: ironclad
+  become: true
+  tasks:
+  - name: dbg
+    debug:
+      msg: "{{ ansible_os_family  }} {{ ansible_distribution }} [should be trueos]"
+
+  - name: install the latest version of poudriere
+    pkgng:
+      name: poudriere-3.2.4
+      state: present
+#    become: true
+  - name: "Poudriere config zfs"
+    blockinfile:
+      path: /usr/local/etc/poudriere.conf
+      block: |
+        ZPOOL=tank
+        ZROOTFS=/poudriere
+  - name: get port-make.conf
+    get_url:
+      url: https://raw.githubusercontent.com/trueos/trueos-core/master/build-files/conf/desktop/port-make.conf
+      dest: /usr/local/etc/poudriere.d/trueos-make.conf
+  - name: "Poudriere config git"
+    lineinfile:
+      path: /usr/local/etc/poudriere.conf
+      line: "GIT_URL=https://github.com/trueos/freebsd-ports"
+  - name: "Check if ports tree exists"
+    shell: poudriere ports -l | grep -o trueos-ports | head -n 1
+    register: have_ports
+  - name: "Set poudriere ports tree"
+    shell: poudriere ports -c -p trueos-ports -B trueos-master -m git
+    when: have_ports.stdout == ""
+  - name: "Check if jail exists"
+    shell: poudriere jail -l | grep -o trueos | head -n 1
+    register: have_jail
+  - name: "Create poudriere jail"
+    when: have_jail.stdout == ""
+    command: "poudriere jail -c -j trueos -v 12-CURRENT -m url=http://download.trueos.org/unstable/amd64/dist/"
+
+
+#
