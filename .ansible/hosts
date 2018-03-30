@@ -1,8 +1,20 @@
 [chimaerlet]
 ironclad
 
-[chimaerlet]
-ironclad remote_user=user become_user=user ansible_become_pass=ironclad ansible_python_interpreter=/usr/local/bin/python3.6
+[local]
+localhost
+
+[local:vars]
+ansible_connection=local
+ansible_become_pass=YOUR_PASSWORD
+ansible_python_interpreter=/usr/local/bin/python3.6
+
+
+[chimaerlet:vars]
+remote_user=user
+become_user=user
+ansible_become_pass=ironclad
+ansible_python_interpreter=/usr/local/bin/python3.6
 
 
 
