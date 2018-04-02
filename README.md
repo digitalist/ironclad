@@ -1,6 +1,12 @@
 # TrueOS Poudriere setup 
 
-Experimental Ansible playbook for deploying basic poudriere port building machine
+Experimental Ansible playbook for deploying basic poudriere port building machine.
+
+You may need it if you want:
+ 
+ - to build packages for TrueOS in the same env as official
+ - to make patches for existing software 
+ - to port something new
 
 
 ### Usage
