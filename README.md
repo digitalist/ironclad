@@ -22,9 +22,13 @@ You may need it if you want:
     
 
 #### Installation
-Set your host variables in `.ansible/hosts`  then run:
+localhost: `sudo ansible-playbook  chimaerlet.yml --connection=local` 
 
-`ansible-playbook chimaerlet.yml --extra-vars "phosts=localhost"`  (replace `localhost` with your box name)
+other hosts: set your host variables in `.ansible/hosts`  then run:
+
+    `ansible-playbook chimaerlet.yml --extra-vars "phosts=trueos.example.com"`  
+
+(replace `trueos.example.com` with your box name)
 
 #### Running 
 

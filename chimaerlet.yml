@@ -1,5 +1,5 @@
 - name: Poudriere setup
-  hosts: "{{ phosts | default('ironclad') }}"
+  hosts: "{{ phosts | default('localhost') }}"
   become: true
   tasks:
 #  - include_vars: "vars.yml"
