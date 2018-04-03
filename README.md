@@ -1,6 +1,8 @@
 # TrueOS Poudriere setup 
 
-Experimental Ansible playbook for deploying basic poudriere port building machine.
+Experimental Ansible playbook for deploying basic poudriere port building machine. 
+
+ 
 
 You may need it if you want:
  
@@ -47,3 +49,8 @@ other default values:
     `url_conf: "{{ url_conf | default('https://raw.githubusercontent.com/trueos/trueos-core/master/build-files/conf/desktop/port-make.conf') }}"`
 
     `url_dist: "{{ url_dist | default('http://download.trueos.org/unstable/amd64/dist/') }}"` 
+    
+#### Todo:
+
+This is part of a larger [task](https://github.com/trueos/trueos-core/issues/1537)
+Made using instructions by @kmoore134      
